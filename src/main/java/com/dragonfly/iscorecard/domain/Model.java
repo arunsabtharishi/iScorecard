@@ -1,15 +1,13 @@
 package com.dragonfly.iscorecard.domain;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-
-import javax.persistence.MappedSuperclass;
 
 /**
  * Created by Arun on 9/4/2015.
@@ -23,7 +21,7 @@ public abstract class Model {
     @Column(name = "ID", updatable = false)
     @Size(max = ID_LENGTH)
     @GeneratedValue(generator = "UuidOrAssignedGenerator")
-    @GenericGenerator(name = "UuidOrAssignedGenerator", strategy = "jpa.UuidOrAssignedGenerator", parameters = { @Parameter(name = "strategy", value = "uuid2") })
+    @GenericGenerator(name = "UuidOrAssignedGenerator", strategy = "com.dragonfly.iscorecard.util.jpa.UuidOrAssignedGenerator", parameters = { @Parameter(name = "strategy", value = "uuid2") })
     private String id;
 
     public String getId() {

@@ -11,26 +11,26 @@ public class Tournament extends Model {
 	
 	@NotNull
 	@Column(name = "TOURNAMENT_NAME")
-	private String tournamentName;
+	private String name;
 	
 	@NotNull
 	@Column(name = "SEASON_NAME")
-	private String SeasonName;
+	private String seasonName;
 	
-	public String getTournamentName() {
-		return tournamentName;
+	public String getName() {
+		return name;
 	}
 
-	public void setTournamentName(String tournamentName) {
-		this.tournamentName = tournamentName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getSeasonName() {
-		return SeasonName;
+		return seasonName;
 	}
 
 	public void setSeasonName(String seasonName) {
-		SeasonName = seasonName;
+		this.seasonName = seasonName;
 	}
 
 

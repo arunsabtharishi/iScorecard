@@ -2,22 +2,26 @@ package com.dragonfly.iscorecard.domain;
 
 import javax.validation.constraints.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "BATTING_STATS")
-public class BattingStatsForMatch extends Model {
+public class BattingStats extends Model {
     @NotNull
     @Column(name = "BATTING_POSITION")
     private int battingPosition;
 
     @NotNull
     @Column(name = "DID_NOT_BAT")
-    private boolean didNotBat;
+    private String didNotBat;
 
     @NotNull
     @Column(name = "BALLS_FACED")
@@ -34,20 +38,31 @@ public class BattingStatsForMatch extends Model {
     @NotNull
     @Column(name = "SIXES")
     private int sixes;
-    
-    @ManyToOne
-    @JoinColumn(name = "id")
-    Player player;
-    
-    
-    public Player getPlayer() {
+        
+    @OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@Column(name = "PLAYER_ID")   
+	private List<Player> player = new ArrayList<Player>();
+
+	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@Column(name = "GAME_ID")
+	private List<Game> game = new ArrayList<Game>();
+	
+	public List<Player> getTeam() {
 		return player;
 	}
 
-	public void setPlayer(Player player) {
+	public void setTeam(List<Player> player) {
 		this.player = player;
 	}
 
+	public List<Game> getGames() {
+		return game;
+	}
+
+	public void setGames(List<Game> game) {
+		this.game = game;
+	}
+        
     public int getRunsScored() {
         return runsScored;
     }
@@ -64,11 +79,11 @@ public class BattingStatsForMatch extends Model {
         this.battingPosition = battingPosition;
     }
 
-    public boolean isDidNotBat() {
+    public String isDidNotBat() {
         return didNotBat;
     }
 
-    public void setDidNotBat(boolean didNotBat) {
+    public void setDidNotBat(String didNotBat) {
         this.didNotBat = didNotBat;
     }
 

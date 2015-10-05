@@ -2,11 +2,12 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="iScorecard">
 		<class>com.dragonfly.iscorecard.domain.Model</class>
-		<class>com.dragonfly.iscorecard.domain.Game</class>
-		<class>com.dragonfly.iscorecard.domain.Team</class>
-		<class>com.dragonfly.iscorecard.domain.Player</class>
-		<class>com.dragonfly.iscorecard.domain.BowlingStatsForMatch</class>
-		<class>com.dragonfly.iscorecard.domain.BattingStatsForMatch</class>
 		<class>com.dragonfly.iscorecard.domain.Tournament</class>
+		<class>com.dragonfly.iscorecard.domain.Team</class>
+		<class>com.dragonfly.iscorecard.domain.Game</class>
+		<class>com.dragonfly.iscorecard.domain.Player</class>
+		<class>com.dragonfly.iscorecard.domain.BowlingStats</class>
+		<class>com.dragonfly.iscorecard.domain.BattingStats</class>
+		<class>com.dragonfly.iscorecard.domain.FieldingStats</class>
 	</persistence-unit>
 </persistence>
