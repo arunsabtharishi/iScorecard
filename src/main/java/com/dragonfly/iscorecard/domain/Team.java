@@ -1,7 +1,7 @@
 package com.dragonfly.iscorecard.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,19 +17,27 @@ public class Team extends Model {
 	
 	@Column(name = "TEAM_NAME")
 	private String teamName;
+  
+    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Player> player = new LinkedHashSet<>();
+    
+	@ManyToMany(cascade=CascadeType.ALL, mappedBy="teams") 
+    private Set<Game> games; 
 	
-	@ManyToMany(mappedBy="teams")
-	private List<Game> games = new ArrayList<Game>();
-	
-	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@Column(name = "ID")
-	private List<Player> player = new ArrayList<Player>();
-	
-	public List<Game> getGames() {
-		return games;
+	public Set<Player> getPlayer() {
+		return player;
 	}
 
-	public void setGames(List<Game> games) {
+	public void setPlayer(Set<Player> player) {
+		this.player = player;
+	}
+
+	public Set<Game> getGames()  
+    {  
+        return games;  
+    }  
+	
+	public void setGames(Set<Game> games) {
 		this.games = games;
 	}
 
