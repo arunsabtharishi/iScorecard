@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,10 +18,18 @@ public class Team extends Model {
 	private String teamName;
   
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Player> player = new LinkedHashSet<>();
+	private Set<Player> player = new LinkedHashSet<Player>();
     
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy="teams") 
-    private Set<Game> games; 
+	@OneToMany(mappedBy = "game")
+	private Set<GameTeam> gameTeam;
+	
+	public Set<GameTeam> getGameTeam() {
+		return gameTeam;
+	}
+
+	public void setGameTeam(Set<GameTeam> gameTeam) {
+		this.gameTeam = gameTeam;
+	}
 	
 	public Set<Player> getPlayer() {
 		return player;
@@ -30,15 +37,6 @@ public class Team extends Model {
 
 	public void setPlayer(Set<Player> player) {
 		this.player = player;
-	}
-
-	public Set<Game> getGames()  
-    {  
-        return games;  
-    }  
-	
-	public void setGames(Set<Game> games) {
-		this.games = games;
 	}
 
 	public String getTeamName() {

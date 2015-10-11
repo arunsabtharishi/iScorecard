@@ -9,5 +9,6 @@
 		<class>com.dragonfly.iscorecard.domain.BowlingStats</class>
 		<class>com.dragonfly.iscorecard.domain.BattingStats</class>
 		<class>com.dragonfly.iscorecard.domain.FieldingStats</class>
+		<class>com.dragonfly.iscorecard.domain.GameTeam</class>
 	</persistence-unit>
 </persistence>
