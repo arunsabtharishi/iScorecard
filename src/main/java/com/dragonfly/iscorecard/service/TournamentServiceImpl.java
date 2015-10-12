@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.dragonfly.iscorecard.domain.GameTeam;
 import com.dragonfly.iscorecard.domain.Player;
 import com.dragonfly.iscorecard.domain.PlayerStats;
+import com.dragonfly.iscorecard.domain.PlayerTeam;
 import com.dragonfly.iscorecard.domain.Team;
 import com.dragonfly.iscorecard.domain.Tournament;
 import com.dragonfly.iscorecard.repository.BattingStatsJpaRepository;
@@ -17,9 +18,11 @@ import com.dragonfly.iscorecard.repository.BowlingStatsJpaRepository;
 import com.dragonfly.iscorecard.repository.FieldingStatsJpaRepository;
 import com.dragonfly.iscorecard.repository.GameTeamJpaRepository;
 import com.dragonfly.iscorecard.repository.PlayerJpaRepository;
+import com.dragonfly.iscorecard.repository.PlayerTeamJpaRepository;
 import com.dragonfly.iscorecard.repository.TeamJpaRepository;
 import com.dragonfly.iscorecard.repository.TournamentJpaRepository;
 import com.dragonfly.iscorecard.request.GameTeamRequest;
+import com.dragonfly.iscorecard.request.PlayerTeamRequest;
 
 @Service
 public class TournamentServiceImpl implements TournamentService {
@@ -43,6 +46,9 @@ public class TournamentServiceImpl implements TournamentService {
 	
 	@Autowired
 	private GameTeamJpaRepository gameTeamRepository;
+	
+	@Autowired
+	private PlayerTeamJpaRepository playerTeamRepository; 
 
 	@Override
 	public void enterTournamentDetails(Tournament tournament) {
@@ -74,8 +80,22 @@ public class TournamentServiceImpl implements TournamentService {
 	}
 	
 	@Override
-	public void createPlayer(Player player) {
-		playerRepository.save(player);		
+	public void createPlayer(PlayerTeamRequest playerTeamRequest) {
+		List<PlayerTeam> playerTeams = new ArrayList<PlayerTeam>();
+		for(Entry<String, String> hm : playerTeamRequest.getPlayeTeamMap().entrySet()) {
+			Player player = new Player();
+			player.setFirstName(hm.getKey());
+			
+			Team team = new Team();
+			team.setId(hm.getValue());
+			
+			PlayerTeam playerTeam = new PlayerTeam();
+			playerTeam.setPlayer(player);
+			playerTeam.setTeam(team);
+			
+			playerTeams.add(playerTeam);
+		}
+		playerTeamRepository.save(playerTeams);
 	}
 
 	@Override
