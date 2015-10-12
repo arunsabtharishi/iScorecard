@@ -6,11 +6,11 @@ public class PlayerTeamRequest {
 	
 	private HashMap<String, String> playerTeamMap;
 
-	public HashMap<String, String> getPlayeTeamMap() {
+	public HashMap<String, String> getPlayerTeamMap() {
 		return playerTeamMap;
 	}
 
-	public void setPlayeTeamMap(HashMap<String, String> playeTeamMap) {
-		this.playerTeamMap = playeTeamMap;
+	public void setPlayeTeamMap(HashMap<String, String> playerTeamMap) {
+		this.playerTeamMap = playerTeamMap;
 	}
 }

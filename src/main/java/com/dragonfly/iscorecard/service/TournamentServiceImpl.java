@@ -82,7 +82,7 @@ public class TournamentServiceImpl implements TournamentService {
 	@Override
 	public void createPlayer(PlayerTeamRequest playerTeamRequest) {
 		List<PlayerTeam> playerTeams = new ArrayList<PlayerTeam>();
-		for(Entry<String, String> hm : playerTeamRequest.getPlayeTeamMap().entrySet()) {
+		for(Entry<String, String> hm : playerTeamRequest.getPlayerTeamMap().entrySet()) {
 			Player player = new Player();
 			player.setFirstName(hm.getKey());
 			
