@@ -1,13 +1,12 @@
 package com.dragonfly.iscorecard.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,27 +23,27 @@ public class FieldingStats extends Model {
 	@Column(name = "RUNOUTS")
 	private int runOuts;
 
-	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@Column(name = "PLAYER_ID")   
-	private List<Player> player = new ArrayList<Player>();
+	@OneToOne(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "ID")   
+	private Player player;
 
-	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@Column(name = "GAME_ID")
-	private List<Game> game = new ArrayList<Game>();
-
-	public List<Player> getTeam() {
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "GAME_ID")
+	private Game game;
+	
+	public Player getPlayer() {
 		return player;
 	}
 
-	public void setTeam(List<Player> player) {
+	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
-	public List<Game> getGames() {
+	public Game getGame() {
 		return game;
 	}
 
-	public void setGames(List<Game> game) {
+	public void setGame(Game game) {
 		this.game = game;
 	}	
 

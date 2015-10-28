@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dragonfly.iscorecard.domain.PlayerStats;
 import com.dragonfly.iscorecard.domain.Team;
 import com.dragonfly.iscorecard.domain.Tournament;
 import com.dragonfly.iscorecard.request.GameTeamRequest;
+import com.dragonfly.iscorecard.request.PlayerStatsRequest;
 import com.dragonfly.iscorecard.request.PlayerTeamRequest;
 import com.dragonfly.iscorecard.service.TournamentService;
 
@@ -51,8 +51,8 @@ public class ScorecardController {
 	
 	@RequestMapping(value = "/stats", method = RequestMethod.POST)
 	@ResponseBody
-	public void enterGameDetails(@RequestBody List<PlayerStats> playerstats) {
-		tournamentService.enterStats(playerstats);
+	public void enterGameDetails(@RequestBody PlayerStatsRequest playerstatsRequests) {
+		tournamentService.enterStats(playerstatsRequests);
 	}
 	
 	

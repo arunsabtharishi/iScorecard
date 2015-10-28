@@ -1,16 +1,14 @@
 package com.dragonfly.iscorecard.domain;
 
-import javax.validation.constraints.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "BATTING_STATS")
@@ -39,27 +37,27 @@ public class BattingStats extends Model {
     @Column(name = "SIXES")
     private int sixes;
         
-    @OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@Column(name = "PLAYER_ID")   
-	private List<Player> player = new ArrayList<Player>();
+    @OneToOne(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
+	@JoinColumn(name = "PLAYER_ID")   
+	private Player player;
 
-	@OneToMany(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@Column(name = "GAME_ID")
-	private List<Game> game = new ArrayList<Game>();
+	@ManyToOne(targetEntity = Game.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "GAME_ID")
+	private Game game;
 	
-	public List<Player> getTeam() {
+	public Player getPlayer() {
 		return player;
 	}
 
-	public void setTeam(List<Player> player) {
+	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
-	public List<Game> getGames() {
+	public Game getGame() {
 		return game;
 	}
 
-	public void setGames(List<Game> game) {
+	public void setGames(Game game) {
 		this.game = game;
 	}
         

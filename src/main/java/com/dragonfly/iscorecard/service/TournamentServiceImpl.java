@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.dragonfly.iscorecard.domain.GameTeam;
 import com.dragonfly.iscorecard.domain.Player;
-import com.dragonfly.iscorecard.domain.PlayerStats;
 import com.dragonfly.iscorecard.domain.PlayerTeam;
 import com.dragonfly.iscorecard.domain.Team;
 import com.dragonfly.iscorecard.domain.Tournament;
@@ -22,6 +21,7 @@ import com.dragonfly.iscorecard.repository.PlayerTeamJpaRepository;
 import com.dragonfly.iscorecard.repository.TeamJpaRepository;
 import com.dragonfly.iscorecard.repository.TournamentJpaRepository;
 import com.dragonfly.iscorecard.request.GameTeamRequest;
+import com.dragonfly.iscorecard.request.PlayerStatsRequest;
 import com.dragonfly.iscorecard.request.PlayerTeamRequest;
 
 @Service
@@ -99,12 +99,11 @@ public class TournamentServiceImpl implements TournamentService {
 	}
 
 	@Override
-	public void enterStats(List<PlayerStats> playerStats) {
-		
-		for(PlayerStats playerStat: playerStats) {
-			battingStatsJpaRepository.save(playerStat.getBattingStats());
-			bowlingStatsJpaRepository.save(playerStat.getBowlingStats());
-			fieldingStatsJpaRepository.save(playerStat.getFieldingStats());			
-		}
+	public void enterStats(PlayerStatsRequest playerStatsRequests) {
+		//for(PlayerStatsRequest playerStat: playerStatsRequests) {
+			battingStatsJpaRepository.save(playerStatsRequests.getBattingStats());
+//			bowlingStatsJpaRepository.save(playerStatsRequests.getBowlingStats());
+//			fieldingStatsJpaRepository.save(playerStatsRequests.getFieldingStats());			
+		//}
 	}
 }

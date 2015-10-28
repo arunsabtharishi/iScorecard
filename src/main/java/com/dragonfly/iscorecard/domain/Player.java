@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +17,40 @@ public class Player extends Model {
 
 	@OneToMany(mappedBy = "team")
 	private Set<GameTeam> playerTeam;
+	
+	@OneToOne(mappedBy = "player")
+	private BowlingStats bowlingStats;
+
+	@OneToOne(targetEntity = BattingStats.class,mappedBy = "player")
+	private BattingStats battingStats;
+	
+	@OneToOne(mappedBy = "player")
+	private BowlingStats fieldingStats;
+	
+	public BowlingStats getBowlingStats() {
+		return bowlingStats;
+	}
+
+	public void setBowlingStats(BowlingStats bowlingStats) {
+		this.bowlingStats = bowlingStats;
+	}
+
+	public BattingStats getBattingStats() {
+		return battingStats;
+	}
+
+	public void setBattingStats(BattingStats battingStats) {
+		this.battingStats = battingStats;
+	}
+
+	public BowlingStats getFieldingStats() {
+		return fieldingStats;
+	}
+
+	public void setFieldingStats(BowlingStats fieldingStats) {
+		this.fieldingStats = fieldingStats;
+	}
+
 	
 	public String getFirstName() {
 		return firstName;
