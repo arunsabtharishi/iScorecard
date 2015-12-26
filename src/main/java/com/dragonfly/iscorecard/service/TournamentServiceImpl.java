@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dragonfly.iscorecard.domain.Game;
 import com.dragonfly.iscorecard.domain.GameTeam;
 import com.dragonfly.iscorecard.domain.Player;
 import com.dragonfly.iscorecard.domain.PlayerTeam;
@@ -15,6 +16,7 @@ import com.dragonfly.iscorecard.domain.Tournament;
 import com.dragonfly.iscorecard.repository.BattingStatsJpaRepository;
 import com.dragonfly.iscorecard.repository.BowlingStatsJpaRepository;
 import com.dragonfly.iscorecard.repository.FieldingStatsJpaRepository;
+import com.dragonfly.iscorecard.repository.GameJpaRepository;
 import com.dragonfly.iscorecard.repository.GameTeamJpaRepository;
 import com.dragonfly.iscorecard.repository.PlayerJpaRepository;
 import com.dragonfly.iscorecard.repository.PlayerTeamJpaRepository;
@@ -23,6 +25,7 @@ import com.dragonfly.iscorecard.repository.TournamentJpaRepository;
 import com.dragonfly.iscorecard.request.GameTeamRequest;
 import com.dragonfly.iscorecard.request.PlayerStatsRequest;
 import com.dragonfly.iscorecard.request.PlayerTeamRequest;
+import com.dragonfly.iscorecard.response.GameTeamResponse;
 
 @Service
 public class TournamentServiceImpl implements TournamentService {
@@ -49,6 +52,9 @@ public class TournamentServiceImpl implements TournamentService {
 	
 	@Autowired
 	private PlayerTeamJpaRepository playerTeamRepository; 
+	
+	@Autowired
+	private GameJpaRepository gameRepository;
 
 	@Override
 	public void enterTournamentDetails(Tournament tournament) {
@@ -105,5 +111,17 @@ public class TournamentServiceImpl implements TournamentService {
 //			bowlingStatsJpaRepository.save(playerStatsRequests.getBowlingStats());
 //			fieldingStatsJpaRepository.save(playerStatsRequests.getFieldingStats());			
 		//}
+	}
+	
+	public GameTeamResponse fetchGameDetails(String gameId) {
+		Game game =  gameRepository.findById(gameId);
+		List<GameTeam> gameTeams = gameTeamRepository.findByGame(game);
+		GameTeamResponse gameTeamResponse = new GameTeamResponse();
+		List<String> teamsList = new ArrayList<String>();
+		for(GameTeam gameTeam: gameTeams) {
+			teamsList.add(gameTeam.getTeam().getTeamName());
+		}
+		gameTeamResponse.setTeams(teamsList);
+		return gameTeamResponse;
 	}
 }

@@ -1,9 +1,8 @@
 package com.dragonfly.iscorecard.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +13,7 @@ import com.dragonfly.iscorecard.domain.Tournament;
 import com.dragonfly.iscorecard.request.GameTeamRequest;
 import com.dragonfly.iscorecard.request.PlayerStatsRequest;
 import com.dragonfly.iscorecard.request.PlayerTeamRequest;
+import com.dragonfly.iscorecard.response.GameTeamResponse;
 import com.dragonfly.iscorecard.service.TournamentService;
 
 /**
@@ -53,6 +53,12 @@ public class ScorecardController {
 	@ResponseBody
 	public void enterGameDetails(@RequestBody PlayerStatsRequest playerstatsRequests) {
 		tournamentService.enterStats(playerstatsRequests);
+	}
+	
+	@RequestMapping(value = "{gameId}/game", method = RequestMethod.GET)
+	@ResponseBody
+	public GameTeamResponse getGameDetails(@PathVariable String gameId) {
+		return tournamentService.fetchGameDetails(gameId);
 	}
 	
 	
