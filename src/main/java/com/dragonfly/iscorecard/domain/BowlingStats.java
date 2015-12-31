@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -12,8 +13,11 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "BOWLING_STATS")
-public class BowlingStats extends Model {
-
+public class BowlingStats {
+	
+	@Id
+	String id;
+	
 	@NotNull
 	@Column(name = "DID_NOT_BOWL")
 	private String didNotBowl;
@@ -42,11 +46,11 @@ public class BowlingStats extends Model {
 	@Column(name = "MAIDENS")
 	private int maidens;
 
-	@OneToOne(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "ID")   
+	@OneToOne(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
+	@JoinColumn(name = "PLAYER_ID")   
 	private Player player;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
 
@@ -121,5 +125,12 @@ public class BowlingStats extends Model {
 	public void setMaidens(int maidens) {
 		this.maidens = maidens;
 	}
+	
+	public String getId() {
+  		return id;
+  	}
 
+  	public void setId(String id) {
+  		this.id = id;
+  	}
 }

@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -15,7 +16,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "FIELDING_STATS")
-public class FieldingStats extends Model {
+public class FieldingStats {
+	
+	@Id
+	String id;
 
 	@Column(name = "CATCHES")
 	private int catches;
@@ -23,11 +27,11 @@ public class FieldingStats extends Model {
 	@Column(name = "RUNOUTS")
 	private int runOuts;
 
-	@OneToOne(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "ID")   
+	@OneToOne(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
+	@JoinColumn(name = "PLAYER_ID")   
 	private Player player;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
 	
@@ -62,5 +66,12 @@ public class FieldingStats extends Model {
 	public void setRunOuts(int runOuts) {
 		this.runOuts = runOuts;
 	}
+	
+	public String getId() {
+  		return id;
+  	}
 
+  	public void setId(String id) {
+  		this.id = id;
+  	}
 }

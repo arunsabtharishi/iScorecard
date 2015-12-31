@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -12,8 +13,12 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "BATTING_STATS")
-public class BattingStats extends Model {
-    @NotNull
+public class BattingStats {
+	
+	@Id
+	String id;
+
+	@NotNull
     @Column(name = "BATTING_POSITION")
     private int battingPosition;
 
@@ -36,11 +41,13 @@ public class BattingStats extends Model {
     @NotNull
     @Column(name = "SIXES")
     private int sixes;
-        
+   
+    
     @OneToOne(targetEntity = Player.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
-	@JoinColumn(name = "PLAYER_ID")   
+	@JoinColumn(name = "PLAYER_ID")
 	private Player player;
-
+    
+    
 	@ManyToOne(targetEntity = Game.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
@@ -108,4 +115,20 @@ public class BattingStats extends Model {
     public void setSixes(int sixes) {
         this.sixes = sixes;
     }
+    
+    public String getId() {
+  		return id;
+  	}
+
+  	public void setId(String id) {
+  		this.id = id;
+  	}
+
+  	public String getDidNotBat() {
+  		return didNotBat;
+  	}
+
+  	public void setGame(Game game) {
+  		this.game = game;
+  	}
 }

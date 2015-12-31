@@ -51,8 +51,8 @@ public class ScorecardController {
 	
 	@RequestMapping(value = "/stats", method = RequestMethod.POST)
 	@ResponseBody
-	public void enterGameDetails(@RequestBody PlayerStatsRequest playerstatsRequests) {
-		tournamentService.enterStats(playerstatsRequests);
+	public void enterGameDetails(@RequestBody PlayerStatsRequest playerStatsRequests) {
+		tournamentService.enterStats(playerStatsRequests);
 	}
 	
 	@RequestMapping(value = "{gameId}/game", method = RequestMethod.GET)

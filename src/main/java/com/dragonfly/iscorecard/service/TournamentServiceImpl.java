@@ -18,7 +18,6 @@ import com.dragonfly.iscorecard.repository.BowlingStatsJpaRepository;
 import com.dragonfly.iscorecard.repository.FieldingStatsJpaRepository;
 import com.dragonfly.iscorecard.repository.GameJpaRepository;
 import com.dragonfly.iscorecard.repository.GameTeamJpaRepository;
-import com.dragonfly.iscorecard.repository.PlayerJpaRepository;
 import com.dragonfly.iscorecard.repository.PlayerTeamJpaRepository;
 import com.dragonfly.iscorecard.repository.TeamJpaRepository;
 import com.dragonfly.iscorecard.repository.TournamentJpaRepository;
@@ -40,9 +39,6 @@ public class TournamentServiceImpl implements TournamentService {
 	
 	@Autowired
 	private FieldingStatsJpaRepository fieldingStatsJpaRepository;
-	
-	@Autowired
-	private PlayerJpaRepository playerRepository;
 	
 	@Autowired
 	private TeamJpaRepository teamRepository;
@@ -106,12 +102,14 @@ public class TournamentServiceImpl implements TournamentService {
 
 	@Override
 	public void enterStats(PlayerStatsRequest playerStatsRequests) {
-		//for(PlayerStatsRequest playerStat: playerStatsRequests) {
+			String id = playerStatsRequests.getBattingStats().getPlayer().getId() + playerStatsRequests.getBattingStats().getGame().getId();
+			playerStatsRequests.getBattingStats().setId(id);
+			playerStatsRequests.getBowlingStats().setId(id);
+			playerStatsRequests.getFieldingStats().setId(id);
 			battingStatsJpaRepository.save(playerStatsRequests.getBattingStats());
-//			bowlingStatsJpaRepository.save(playerStatsRequests.getBowlingStats());
-//			fieldingStatsJpaRepository.save(playerStatsRequests.getFieldingStats());			
-		//}
-	}
+			bowlingStatsJpaRepository.save(playerStatsRequests.getBowlingStats());	
+			fieldingStatsJpaRepository.save(playerStatsRequests.getFieldingStats());			
+	}	
 	
 	public GameTeamResponse fetchGameDetails(String gameId) {
 		Game game =  gameRepository.findById(gameId);

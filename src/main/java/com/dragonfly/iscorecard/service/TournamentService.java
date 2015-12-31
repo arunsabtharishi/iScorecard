@@ -16,7 +16,7 @@ public interface TournamentService {
 	
 	public void createPlayer(PlayerTeamRequest playerTeamRequest);
 	
-	public void enterStats(PlayerStatsRequest playerstatsRequests);
+	public void enterStats(PlayerStatsRequest playerStatsRequests);
 	
 	public GameTeamResponse fetchGameDetails(String gameId);
 }
