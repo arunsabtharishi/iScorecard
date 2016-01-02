@@ -3,15 +3,23 @@ package com.dragonfly.iscorecard.response;
 import java.util.List;
 
 public class GameTeamResponse {
-	List<String> teams;
+	String teams;
+	
+	List<BattingStatsResponse> battingStatsResponse;
 
-	public List<String> getTeams() {
+	public String getTeams() {
 		return teams;
 	}
 
-	public void setTeams(List<String> teams) {
+	public void setTeams(String teams) {
 		this.teams = teams;
 	}
-
 	
+	public List<BattingStatsResponse> getBattingStatsResponse() {
+		return battingStatsResponse;
+	}
+
+	public void setBattingStatsResponse(List<BattingStatsResponse> battingStatsResponse) {
+		this.battingStatsResponse = battingStatsResponse;
+	}
 }

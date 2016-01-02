@@ -8,5 +8,5 @@ import com.dragonfly.iscorecard.domain.Player;
 
 @Repository
 public interface PlayerJpaRepository extends JpaRepository<Player, Long> {
-
+	Player findById(String id);
 }

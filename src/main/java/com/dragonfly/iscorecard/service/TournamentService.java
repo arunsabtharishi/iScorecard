@@ -1,5 +1,7 @@
 package com.dragonfly.iscorecard.service;
 
+import java.util.List;
+
 import com.dragonfly.iscorecard.domain.Team;
 import com.dragonfly.iscorecard.domain.Tournament;
 import com.dragonfly.iscorecard.request.GameTeamRequest;
@@ -18,5 +20,11 @@ public interface TournamentService {
 	
 	public void enterStats(PlayerStatsRequest playerStatsRequests);
 	
-	public GameTeamResponse fetchGameDetails(String gameId);
+	public void enterBattingStats(PlayerStatsRequest playerStatsRequests);
+	
+	public void enterBowlingStats(PlayerStatsRequest playerStatsRequests);
+	
+	public void enterFieldingStats(PlayerStatsRequest playerStatsRequests);
+	
+	public List<GameTeamResponse> fetchGameDetails(String gameId);
 }

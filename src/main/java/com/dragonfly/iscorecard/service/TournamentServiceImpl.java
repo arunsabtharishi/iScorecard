@@ -1,12 +1,15 @@
 package com.dragonfly.iscorecard.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dragonfly.iscorecard.domain.BattingStats;
 import com.dragonfly.iscorecard.domain.Game;
 import com.dragonfly.iscorecard.domain.GameTeam;
 import com.dragonfly.iscorecard.domain.Player;
@@ -18,12 +21,14 @@ import com.dragonfly.iscorecard.repository.BowlingStatsJpaRepository;
 import com.dragonfly.iscorecard.repository.FieldingStatsJpaRepository;
 import com.dragonfly.iscorecard.repository.GameJpaRepository;
 import com.dragonfly.iscorecard.repository.GameTeamJpaRepository;
+import com.dragonfly.iscorecard.repository.PlayerJpaRepository;
 import com.dragonfly.iscorecard.repository.PlayerTeamJpaRepository;
 import com.dragonfly.iscorecard.repository.TeamJpaRepository;
 import com.dragonfly.iscorecard.repository.TournamentJpaRepository;
 import com.dragonfly.iscorecard.request.GameTeamRequest;
 import com.dragonfly.iscorecard.request.PlayerStatsRequest;
 import com.dragonfly.iscorecard.request.PlayerTeamRequest;
+import com.dragonfly.iscorecard.response.BattingStatsResponse;
 import com.dragonfly.iscorecard.response.GameTeamResponse;
 
 @Service
@@ -51,6 +56,12 @@ public class TournamentServiceImpl implements TournamentService {
 	
 	@Autowired
 	private GameJpaRepository gameRepository;
+	
+	@Autowired
+	private PlayerJpaRepository playerRepository;
+	
+	@Autowired
+	private PlayerTeamJpaRepository playerteamRepository;
 
 	@Override
 	public void enterTournamentDetails(Tournament tournament) {
@@ -109,17 +120,67 @@ public class TournamentServiceImpl implements TournamentService {
 			battingStatsJpaRepository.save(playerStatsRequests.getBattingStats());
 			bowlingStatsJpaRepository.save(playerStatsRequests.getBowlingStats());	
 			fieldingStatsJpaRepository.save(playerStatsRequests.getFieldingStats());			
-	}	
+	}
 	
-	public GameTeamResponse fetchGameDetails(String gameId) {
+	@Override
+	public void enterBattingStats(PlayerStatsRequest playerStatsRequests) {
+			String id = playerStatsRequests.getBattingStats().getPlayer().getId() + playerStatsRequests.getBattingStats().getGame().getId();
+			playerStatsRequests.getBattingStats().setId(id);
+			battingStatsJpaRepository.save(playerStatsRequests.getBattingStats());			
+	}
+	
+	@Override
+	public void enterBowlingStats(PlayerStatsRequest playerStatsRequests) {
+			String id = playerStatsRequests.getBattingStats().getPlayer().getId() + playerStatsRequests.getBattingStats().getGame().getId();
+			playerStatsRequests.getBowlingStats().setId(id);
+			bowlingStatsJpaRepository.save(playerStatsRequests.getBowlingStats());	
+	}
+	
+	@Override
+	public void enterFieldingStats(PlayerStatsRequest playerStatsRequests) {
+			String id = playerStatsRequests.getBattingStats().getPlayer().getId() + playerStatsRequests.getBattingStats().getGame().getId();
+			playerStatsRequests.getFieldingStats().setId(id);
+			fieldingStatsJpaRepository.save(playerStatsRequests.getFieldingStats());			
+	}
+	
+	public List<GameTeamResponse> fetchGameDetails(String gameId) {
 		Game game =  gameRepository.findById(gameId);
 		List<GameTeam> gameTeams = gameTeamRepository.findByGame(game);
+		List<GameTeamResponse> gameTeamResponses = new ArrayList<GameTeamResponse>();
 		GameTeamResponse gameTeamResponse = new GameTeamResponse();
-		List<String> teamsList = new ArrayList<String>();
+		BattingStatsResponse battingStatsResponse = new BattingStatsResponse();
 		for(GameTeam gameTeam: gameTeams) {
-			teamsList.add(gameTeam.getTeam().getTeamName());
-		}
-		gameTeamResponse.setTeams(teamsList);
-		return gameTeamResponse;
+			String teamName = gameTeam.getTeam().getTeamName();
+			gameTeamResponse.setTeams(teamName);
+			
+			List<BattingStats> battingStatss = battingStatsJpaRepository.findByGameId(gameId);
+			List<BattingStatsResponse> battingStatsResponses = new ArrayList<BattingStatsResponse>();
+			Collections.sort(battingStatss, new Comparator<BattingStats>() {
+		        @Override public int compare(BattingStats b1, BattingStats b2) {
+		            return b1.getBattingPosition() - b2.getBattingPosition(); // Ascending
+		        }
+
+		    });
+			for(BattingStats battingStats : battingStatss){
+				String playerId = battingStats.getPlayer().getId();
+				Player player = playerRepository.findById(playerId);
+				PlayerTeam playerTeam = playerTeamRepository.findByPlayerId(playerId);
+				gameTeamResponse.setTeams(teamName);
+				if(playerTeam.getTeam().getTeamName().equals(teamName)) {				
+					battingStatsResponse.setPlayerName(player.getFirstName());
+					battingStatsResponse.setBallsFaced(battingStats.getBallsFaced());
+					battingStatsResponse.setRunsScored(battingStats.getRunsScored());
+					battingStatsResponse.setBattingPosition(battingStats.getBattingPosition());
+					battingStatsResponse.setFours(battingStats.getFours());
+					battingStatsResponse.setSixes(battingStats.getSixes());
+					battingStatsResponses.add(battingStatsResponse);
+					battingStatsResponse = new BattingStatsResponse();
+				}
+			}
+			gameTeamResponse.setBattingStatsResponse(battingStatsResponses);
+			gameTeamResponses.add(gameTeamResponse);
+			gameTeamResponse = new GameTeamResponse();
+		}		
+		return gameTeamResponses;
 	}
 }

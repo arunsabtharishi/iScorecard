@@ -7,5 +7,5 @@ import com.dragonfly.iscorecard.domain.PlayerTeam;
 
 @Repository
 public interface PlayerTeamJpaRepository extends JpaRepository<PlayerTeam, Long> {
-	
+	PlayerTeam findByPlayerId(String playerId);
 }

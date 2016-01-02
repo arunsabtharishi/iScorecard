@@ -1,5 +1,7 @@
 package com.dragonfly.iscorecard.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,9 +57,27 @@ public class ScorecardController {
 		tournamentService.enterStats(playerStatsRequests);
 	}
 	
+	@RequestMapping(value = "/stats/batting", method = RequestMethod.POST)
+	@ResponseBody
+	public void enterBattingGameDetails(@RequestBody PlayerStatsRequest playerStatsRequests) {
+		tournamentService.enterBattingStats(playerStatsRequests);
+	}
+	
+	@RequestMapping(value = "/stats/bowling", method = RequestMethod.POST)
+	@ResponseBody
+	public void enterBowlingGameDetails(@RequestBody PlayerStatsRequest playerStatsRequests) {
+		tournamentService.enterBowlingStats(playerStatsRequests);
+	}
+	
+	@RequestMapping(value = "/stats/fielding", method = RequestMethod.POST)
+	@ResponseBody
+	public void enterFieldingGameDetails(@RequestBody PlayerStatsRequest playerStatsRequests) {
+		tournamentService.enterFieldingStats(playerStatsRequests);
+	}
+	
 	@RequestMapping(value = "{gameId}/game", method = RequestMethod.GET)
 	@ResponseBody
-	public GameTeamResponse getGameDetails(@PathVariable String gameId) {
+	public List<GameTeamResponse> getGameDetails(@PathVariable String gameId) {
 		return tournamentService.fetchGameDetails(gameId);
 	}
 	

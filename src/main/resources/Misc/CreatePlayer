@@ -1,0 +1,34 @@
+
+{
+  "playerTeamMap": {
+	"AJ Finch":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"DA Warner":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d"
+	"SPD Smith":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"GJ Maxwell":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"SR Watson":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"MJ Clarke":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"JP Faulkner":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"BJ Haddin":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"MG Johnson":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"MA Starc":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d",
+	"JR Hazlewood":"0f208403-d81d-488d-bc56-d4e8a1e9dc2d"
+  }
+}
+
+
+{
+  "playerTeamMap": {
+	"RG Sharma":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"S Dhawan":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"V Kohli":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"AM Rahane":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"SK Raina":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"MS Dhoni":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"RA Jadeja":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"R Ashwin":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"M Shami":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"MM Sharma":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f",
+	"UT Yadav":"5e3b7051-3926-4afe-9f60-aaa0ede5ac1f"
+  }
+}
+
