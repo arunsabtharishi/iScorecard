@@ -60,8 +60,6 @@ public class TournamentServiceImpl implements TournamentService {
 	@Autowired
 	private PlayerJpaRepository playerRepository;
 	
-	@Autowired
-	private PlayerTeamJpaRepository playerteamRepository;
 
 	@Override
 	public void enterTournamentDetails(Tournament tournament) {
@@ -80,8 +78,7 @@ public class TournamentServiceImpl implements TournamentService {
 
 		for(Entry<String, Integer> hm : gameTeamRequest.getTeamsInnigsPostionMap().entrySet()) {			
 			GameTeam gameTeam = new GameTeam();
-			List<Team> teams = teamRepository.findById(hm.getKey());
-			Team team = (teams.isEmpty() ? new Team() : teams.get(0));
+			Team team = teamRepository.findById(hm.getKey());
 			gameTeam.setTeam(team);
 			
 			gameTeam.setGame(gameTeamRequest.getGame());
@@ -101,6 +98,9 @@ public class TournamentServiceImpl implements TournamentService {
 			
 			Team team = new Team();
 			team.setId(hm.getValue());
+			Team teamForId = teamRepository.findById(hm.getValue());
+			player.setTeamName(teamForId.getTeamName());
+			playerRepository.save(player);
 			
 			PlayerTeam playerTeam = new PlayerTeam();
 			playerTeam.setPlayer(player);

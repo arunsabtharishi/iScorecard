@@ -18,6 +18,9 @@ public class Player extends Model {
 	@OneToMany(mappedBy = "team")
 	private Set<GameTeam> playerTeam;
 	
+	@Column(name = "TEAM_NAME")
+	private String teamName;	
+
 	@OneToOne(mappedBy = "player")
 	private BowlingStats bowlingStats;
 
@@ -66,6 +69,14 @@ public class Player extends Model {
 
 	public void setPlayerTeam(Set<GameTeam> playerTeam) {
 		this.playerTeam = playerTeam;
+	}
+	
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
 }

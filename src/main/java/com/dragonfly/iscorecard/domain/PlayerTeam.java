@@ -14,7 +14,7 @@ public class PlayerTeam extends Model {
     @JoinColumn(name = "TEAM_ID")
 	private Team team;
 		
-	@ManyToOne(cascade = {CascadeType.ALL })
+	@ManyToOne(cascade = {CascadeType.MERGE })
     @JoinColumn(name = "PLAYER_ID")
 	private Player player;
 	
